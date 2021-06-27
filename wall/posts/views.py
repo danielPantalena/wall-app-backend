@@ -1,4 +1,5 @@
 from rest_framework.generics import (
+    ListAPIView,
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView
 )
@@ -19,8 +20,7 @@ class PostUserWritePermission(BasePermission):
         return request.user.is_staff or request.user.is_superuser
 '''
 
-class PostsList(ListCreateAPIView):
-    # permission_classes = [PostUserWritePermission]
+class PostsList(ListAPIView):
     serializer_class = PostSerializer
     queryset = Post.objects.all().order_by('created_at').reverse()
     
