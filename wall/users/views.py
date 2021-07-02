@@ -1,5 +1,5 @@
 from rest_framework.generics import (
-    ListAPIView,
+    ListCreateAPIView,
 )
 from rest_framework.permissions import (
     SAFE_METHODS,
@@ -7,11 +7,9 @@ from rest_framework.permissions import (
     BasePermission
 )
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 
 from .serializers import UserSerializer
-
-Users = get_user_model()
 
 '''
 class PostUserWritePermission(BasePermission):
@@ -22,6 +20,6 @@ class PostUserWritePermission(BasePermission):
 '''
 
 
-class UsersList(ListAPIView):
+class UsersList(ListCreateAPIView):
     serializer_class = UserSerializer
-    queryset = Users.objects.all()
+    queryset = User.objects.all()
