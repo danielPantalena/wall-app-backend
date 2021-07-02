@@ -30,17 +30,16 @@ class UsersList(ListCreateAPIView):
 
     def post(self, request):
         new_user_email = request.data['email']
-        is_email_valid = re.match(r"^\w+@\w+\.[a-z]{2,}", new_user_email)
+        new_user_name = request.data['username']
+        is_email_valid = re.match(r"^[\w\.]+@\w+\.[a-z]{2,}", new_user_email)
         if not is_email_valid:
             return HttpResponseBadRequest('A field with a valid email is necessary')
 
-        # send_mail(
-        #     'Congratulations! Your user - {} - was created at Wall App'.format(
-        #         request.data['username']),
-        #     'Hello {} {}, now you can login at Wall App using username and password that you created.'.format(
-        #         'hi', 'last_name'),
-        #     'Wall App',
-        #     [request.data['email']],
-        #     fail_silently=False,
-        # )
+        send_mail(
+            f'Congratulations {new_user_name}! Your account was created at Wall App',
+            f'Hello {new_user_name}, now you can login at Wall App using your email {new_user_email} and the password that you created.',
+            'Wall App <pantalenadaniel@gmail.com>',
+            [request.data['email']],
+            fail_silently=False,
+        )
         return HttpResponse(request.data['email'])

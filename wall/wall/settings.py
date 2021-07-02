@@ -126,3 +126,6 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = "sgbackend.SendGridBackend"
+SENDGRID_API_KEY = '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'
