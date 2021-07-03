@@ -1,4 +1,4 @@
-from django.http.response import Http404, HttpResponse, HttpResponseBadRequest
+from django.http.response import HttpResponse, JsonResponse
 from rest_framework.generics import (
     ListCreateAPIView,
 )
@@ -33,11 +33,11 @@ class UsersList(ListCreateAPIView):
         new_user_name = request.data['username']
         is_email_valid = re.match(r"^[\w\.]+@\w+\.[a-z]{2,}", new_user_email)
         if not is_email_valid:
-            return HttpResponseBadRequest('A field with a valid email is necessary')
+            return JsonResponse({"Error": True, "message": 'A field with a valid email is necessary'}, status=400)
 
         send_mail(
             f'Congratulations {new_user_name}! Your account was created at Wall App',
-            f'Hello {new_user_name}, now you can login at Wall App using your email {new_user_email} and the password that you created.',
+            f'Wellcome {new_user_name}, now you can login at Wall App using your email {new_user_email} and the password that you created.',
             'Wall App <pantalenadaniel@gmail.com>',
             [request.data['email']],
             fail_silently=False,
