@@ -35,6 +35,12 @@ class UsersList(ListCreateAPIView):
         if not is_email_valid:
             return JsonResponse({"Error": True, "message": 'A field with a valid email is necessary'}, status=400)
 
+        User.objects.create_user(
+            username=request.data['username'],
+            email=request.data['email'],
+            password=request.data['password']
+        )
+
         send_mail(
             f'Congratulations {new_user_name}! Your account was created at Wall App',
             f'Wellcome {new_user_name}, now you can login at Wall App using your email {new_user_email} and the password that you created.',
@@ -42,4 +48,5 @@ class UsersList(ListCreateAPIView):
             [request.data['email']],
             fail_silently=False,
         )
-        return HttpResponse(request.data['email'])
+
+        return JsonResponse({"created_user": request.data['username']}, status=201)
