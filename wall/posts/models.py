@@ -8,7 +8,6 @@ from django.db.models import (
     ForeignKey,
     CASCADE
 )
-from django.contrib.auth.models import User
 
 
 class Post(Model):
@@ -17,7 +16,7 @@ class Post(Model):
     title = CharField(max_length=255)
     body = TextField()
     deleted = BooleanField(default=False)
-    author = ForeignKey(User, on_delete=CASCADE)
+    owner = ForeignKey('auth.User', related_name='Posts',on_delete=CASCADE)
     
 
     def __str__(self):
