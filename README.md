@@ -10,7 +10,7 @@ cd wall-app-backend
 ```
 Create a virtual environment to install dependencies in and activate it:
 ```bash
-$ virtualenv2 --no-site-packages env
+$ python3 -m venv env
 $ source env/bin/activate
 ```
 Then install the dependencies:
