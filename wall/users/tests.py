@@ -45,7 +45,8 @@ class AccountTests(APITestCase):
         users_url = reverse('users-list')
         user_data = {'username': 'mari',
                      'password': '4321', 'email': 'mari@mari.com'}
-        created_response = self.client.post(users_url, user_data, format='json')
+        created_response = self.client.post(
+            users_url, user_data, format='json')
         self.assertEqual(created_response.status_code, status.HTTP_201_CREATED)
         token_url = reverse('api-token-auth')
         token_data = {'username': 'mari', 'password': '54321'}
