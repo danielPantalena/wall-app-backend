@@ -7,6 +7,8 @@ from rest_framework.permissions import AllowAny
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 import re
+from decouple import config
+
 
 from .serializers import UserSerializer
 
@@ -38,10 +40,12 @@ class UsersList(ListCreateAPIView):
             password=request.data['password'],
         )
 
+        email_sender = config('EMAIL_SENDER')
+
         send_mail(
-            f'Congratulations {new_username}! Your account was created at Wall App',
-            f'Wellcome {new_username}, now you can login at Wall App using your username {new_username} and the password that you created.',
-            'Wall App <pantalenadaniel@gmail.com>',
+            f'Wellcome {new_username}! Your account was created at Wall App',
+            f'Congratulations {new_username}, now you can login at Wall App using your username {new_username} and the password that you created.',
+            f'Wall App <{email_sender}>',
             [request.data['email']],
             fail_silently=False,
         )
