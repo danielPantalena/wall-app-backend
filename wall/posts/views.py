@@ -5,6 +5,7 @@ from rest_framework.generics import (
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .models import Post
 from .serializers import PostSerializer
+from .permisions import IsOwnerOrReadOnly
 
 
 class PostsList(ListCreateAPIView):
@@ -19,4 +20,4 @@ class PostsList(ListCreateAPIView):
 class PostDetails(RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
     queryset = Post.objects.all().order_by('created_at').reverse()
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
