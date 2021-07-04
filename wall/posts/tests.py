@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 
 
 class PostTests(APITestCase):
-
     def test_guests_can_read_posted_messages(self):
         """
         Ensure guests can read messages.

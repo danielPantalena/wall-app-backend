@@ -35,7 +35,7 @@ class UsersList(ListCreateAPIView):
 
         send_mail(
             f'Wellcome {new_username}! Your account was created at Wall App',
-            f'Congratulations {new_username}, now you can login at Wall App using your username {new_username} and the password that you created.',
+            f'Hi, {new_username}. How are you? \n Now you can write a message on the Wall App after log in with your username {new_username} and the password that you created.',
             f'Wall App <{email_sender}>',
             [request.data['email']],
             fail_silently=False,
