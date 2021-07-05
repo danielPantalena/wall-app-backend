@@ -41,8 +41,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'posts',
-    'users',
     'corsheaders',
+    'users'
 ]
 
 REST_FRAMEWORK = {
@@ -52,17 +52,15 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'wall.urls'
 
@@ -141,3 +139,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = "sgbackend.SendGridBackend"
 SENDGRID_API_KEY = config("SENDGRID_API_KEY")
+
+CORS_ALLOW_ALL_ORIGINS = True
