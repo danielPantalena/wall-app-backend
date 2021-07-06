@@ -6,6 +6,7 @@ from rest_framework.permissions import AllowAny
 
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
+from django.db import IntegrityError
 import re
 from decouple import config
 
@@ -21,15 +22,21 @@ class UsersList(ListCreateAPIView):
     def post(self, request):
         new_user_email = request.data['email']
         new_username = request.data['username']
-        is_email_valid = re.match(r"^[\w\.]+@\w+\.[a-z]{2,}", new_user_email)
-        if not is_email_valid:
-            return JsonResponse({"Error": True, "message": 'A field with a valid email is necessary'}, status=400)
-
-        User.objects.create_user(
-            username=request.data['username'],
-            email=request.data['email'],
-            password=request.data['password'],
-        )
+        new_user_password = request.data['password']
+        if not new_username or not new_user_email or not new_user_password:
+            return JsonResponse({"Error": True, "message": "The fields: 'username', 'email' and 'password' are necessary", "example": {
+                "username": "daniel",
+                "email": "pantalenadaniel@gmail.com",
+                "password": "xablau"
+            }}, status=400)
+        try:
+            User.objects.create_user(
+                username=request.data['username'],
+                email=request.data['email'],
+                password=request.data['password'],
+            )
+        except IntegrityError:
+            return JsonResponse({"Error": True, "message": 'This username already exists. Please try another one :)'}, status=409)
 
         email_sender = config('EMAIL_SENDER')
 
