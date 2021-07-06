@@ -3,14 +3,10 @@ from rest_framework.generics import (
     ListCreateAPIView,
 )
 from rest_framework.permissions import AllowAny
-
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db import IntegrityError
-import re
 from decouple import config
-
-
 from .serializers import UserSerializer
 
 
