@@ -36,12 +36,15 @@ class UsersList(ListCreateAPIView):
 
         email_sender = config('EMAIL_SENDER')
 
-        send_mail(
-            f'Wellcome {new_username}! Your account was created at Wall App',
-            f'Hi, {new_username}. How are you? \n Now you can write a message on the Wall App after log in with your username {new_username} and the password that you created.',
-            f'Wall App <{email_sender}>',
-            [request.data['email']],
-            fail_silently=False,
-        )
+        try:
+            send_mail(
+                f'Wellcome {new_username}! Your account was created at Wall App',
+                f'Hi, {new_username}. How are you? \n Now you can write a message on the Wall App after log in with your username {new_username} and the password that you created.',
+                f'Wall App <{email_sender}>',
+                [request.data['email']],
+                fail_silently=False,
+            )
+        except:
+            print('SendGrid Error. Email not sended')
 
         return JsonResponse({"created_user": request.data['username']}, status=201)
