@@ -45,6 +45,6 @@ class UsersList(ListCreateAPIView):
                 fail_silently=False,
             )
         except:
-            print('SendGrid Error. Email not sended')
+            print('SendGrid Error. Email not sended. Check the SENDGRIND_API_KEY and EMAIL_SENDER data')
 
         return JsonResponse({"created_user": request.data['username']}, status=201)
